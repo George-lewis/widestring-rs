@@ -202,6 +202,11 @@ impl<C: UChar> UString<C> {
         self.inner.extend_from_slice(&s.as_ref().inner)
     }
 
+    /// Push a single `C` onto the string
+    pub fn push_char(&mut self, c: C) {
+        self.inner.push(c)
+    }
+
     /// Removes the last character from this string and returns it, or `None` if the string is empty
     ///
     /// # Examples
