@@ -202,6 +202,74 @@ impl<C: UChar> UString<C> {
         self.inner.extend_from_slice(&s.as_ref().inner)
     }
 
+    /// Removes the last character from this string and returns it, or `None` if the string is empty
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use widestring::U16String;
+    /// let s = "MyString";
+    /// let mut wstr = U16String::from_str(s);
+    ///
+    /// let pop = wstr.pop().unwrap();
+    /// let pop = std::char::from_u32(pop.into()).unwrap();
+    /// assert_eq!(pop, 'g');
+    /// assert_eq!(wstr.to_string().unwrap(), "MyStrin")
+    /// ```
+    ///
+    /// ```rust
+    /// use widestring::U32String;
+    /// let s = "MyString";
+    /// let mut wstr = U32String::from_str(s);
+    ///
+    /// let pop = wstr.pop().unwrap();
+    /// let pop = std::char::from_u32(pop).unwrap();
+    /// assert_eq!(pop, 'g');
+    /// assert_eq!(wstr.to_string().unwrap(), "MyStrin")
+    /// ```
+    pub fn pop(&mut self) -> Option<C> {
+        self.inner.pop()
+    }
+
+    /// Removes the element at `idx` and return it
+    ///
+    /// # Panics
+    /// 
+    /// Panics if `idx` is out of bounds
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use widestring::U16String;
+    /// let s = "MyString";
+    /// let mut wstr = U16String::from_str(s);
+    ///
+    /// let m = wstr.remove(0);
+    /// let m = std::char::from_u32(m.into()).unwrap();
+    /// assert_eq!(m, 'M');
+    /// let g = wstr.remove(6);
+    /// let g = std::char::from_u32(g.into()).unwrap();
+    /// assert_eq!(g, 'g');
+    /// assert_eq!(wstr.to_string().unwrap(), "yStrin")
+    /// ```
+    ///
+    /// ```rust
+    /// use widestring::U32String;
+    /// let s = "MyString";
+    /// let mut wstr = U32String::from_str(s);
+    ///
+    /// let y = wstr.remove(1);
+    /// let y = std::char::from_u32(y).unwrap();
+    /// assert_eq!(y, 'y');
+    /// let n = wstr.remove(5);
+    /// let n = std::char::from_u32(n).unwrap();
+    /// assert_eq!(n, 'n');
+    /// assert_eq!(wstr.to_string().unwrap(), "MStrig")
+    /// ```
+    pub fn remove(&mut self, idx: usize) -> C {
+        self.inner.remove(idx)
+    }
+
     /// Extends the wide string with the given slice.
     ///
     /// No checks are performed on the strings. It is possible to end up nul values inside the
